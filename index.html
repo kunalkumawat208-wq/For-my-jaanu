@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Janhavi ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#ff6a88,#ff99ac);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+.box{
+    max-width:90%;
+    margin:120px auto;
+    background:rgba(255,255,255,0.18);
+    padding:25px;
+    border-radius:20px;
+}
+
+input{
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    font-size:16px;
+    text-align:center;
+    width:260px;
+}
+
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff4f81;
+    font-size:18px;
+    margin-top:15px;
+    cursor:pointer;
+}
+
+#countdownBox, #letterBox{
+    display:none;
+}
+
+p{
+    font-size:18px;
+    line-height:1.7;
+}
+
+/* hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:18px;
+    animation: rise 6s linear infinite;
+    opacity:0.7;
+}
+@keyframes rise{
+    from{transform:translateY(0);}
+    to{transform:translateY(-110vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div class="box" id="passwordBox">
+    <h1>❤️ Janhavi ❤️</h1>
+    <p>Enter the password</p>
+    <input type="password" id="password" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Unlock</button>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="box" id="countdownBox">
+    <h1>⏳ Countdown ⏳</h1>
+    <h2 id="timer">Loading...</h2>
+</div>
+
+<!-- LETTER -->
+<div class="box" id="letterBox">
+    <h1>Dear Janhavi ❤️</h1>
+
+    <p>
+        Tum ho toh sab kuch perfect lagta hai.<br>
+        Tumhari smile meri duniya roshan kar deti hai.<br>
+        Ye website sirf tumhare liye hai ✨
+    </p>
+
+    <p style="margin-top:30px; font-size:22px;">
+        I love you ❤️<br>
+        Happy New Year my hottie 🔥🎉
+    </p>
+</div>
+
+<script>
+let countdownInterval;
+let finished = false;
+
+// PASSWORD CHECK
+function checkPassword(){
+    const correctPassword = "I love you jaanu";
+    const entered = document.getElementById("password").value;
+
+    if(entered === correctPassword){
+        document.getElementById("passwordBox").style.display = "none";
+        document.getElementById("countdownBox").style.display = "block";
+        startMidnightCountdown();
+    } else {
+        alert("Wrong password 😅");
+    }
+}
+
+// GET TODAY'S MIDNIGHT (12:00 AM)
+function getMidnight(){
+    const d = new Date();
+    d.setHours(24,0,0,0); // aaj raat 12 baje
+    return d.getTime();
+}
+
+// COUNTDOWN UNTIL MIDNIGHT (ONE TIME ONLY)
+function startMidnightCountdown(){
+    const target = getMidnight();
+
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(()=>{
+        if(finished) return;
+
+        const diff = target - Date.now();
+
+        if(diff <= 0){
+            finished = true;
+            clearInterval(countdownInterval);
+
+            document.getElementById("countdownBox").style.display = "none";
+            document.getElementById("letterBox").style.display = "block";
+            return;
+        }
+
+        const h = Math.floor(diff / (1000*60*60));
+        const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+        const s = Math.floor((diff % (1000*60)) / 1000);
+
+        document.getElementById("timer").innerHTML =
+            h + "h " + m + "m " + s + "s";
+    },1000);
+}
+
+// HEARTS EFFECT
+setInterval(()=>{
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+},500);
+</script>
+
+</body>
+</html>
